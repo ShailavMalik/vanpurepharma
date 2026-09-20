@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server && tsx scripts/prerender.ts",
-    "preview": "vite preview",
+    "preview": "serve dist -l 4173",
     "lint": "oxlint",
     "typecheck": "tsc -b",
     "assets": "python scripts/prepare-assets.py"
@@ -28,6 +28,7 @@
     "@types/react-dom": "^19.2.7",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
+    "serve": "^14.2.6",
     "tailwindcss": "^4.3.3",
     "tsx": "^4.23.15",
     "typescript": "~6.0.2",

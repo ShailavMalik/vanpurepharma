@@ -20,8 +20,7 @@ export const site = {
 } as const
 
 export const navLinks = [
-  { label: 'Product', href: '/#product' },
-  { label: 'Benefits', href: '/#benefits' },
-  { label: 'Ingredients', href: '/#ingredients' },
+  { label: 'Products', href: '/products' },
+  { label: 'How to order', href: '/#how-it-works' },
   { label: 'About', href: '/about' },
 ] as const

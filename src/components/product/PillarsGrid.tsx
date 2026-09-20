@@ -1,6 +1,6 @@
 import { Brain, HeartPulse, Leaf, Shield, Sparkles, Zap } from 'lucide-react'
 import type { ComponentType, SVGProps } from 'react'
-import { pillars, type PillarIcon } from '../../data/product'
+import type { PillarIcon, Product } from '../../data/products'
 import { GlassCard } from '../ui/GlassCard'
 import { RevealGroup, RevealItem } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
@@ -14,7 +14,7 @@ const icons: Record<PillarIcon, ComponentType<SVGProps<SVGSVGElement>>> = {
   heart: HeartPulse,
 }
 
-export function PillarsGrid() {
+export function PillarsGrid({ product }: { product: Product }) {
   return (
     <section id="benefits" className="section-pad scroll-mt-24">
       <div className="container-site">
@@ -30,7 +30,7 @@ export function PillarsGrid() {
       </div>
 
       <RevealGroup className="no-scrollbar mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-2 sm:px-6 md:container-site md:grid md:grid-cols-2 md:overflow-visible md:px-6 lg:grid-cols-3 lg:px-8">
-        {pillars.map((pillar, index) => {
+        {product.pillars.map((pillar, index) => {
           const Icon = icons[pillar.icon]
           return (
             <RevealItem key={pillar.title} className="w-[82vw] max-w-[360px] shrink-0 snap-center md:w-auto md:max-w-none">

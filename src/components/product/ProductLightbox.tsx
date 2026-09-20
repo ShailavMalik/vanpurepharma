@@ -1,21 +1,21 @@
 import Lightbox from 'yet-another-react-lightbox'
 import Zoom from 'yet-another-react-lightbox/plugins/zoom'
 import 'yet-another-react-lightbox/styles.css'
-import { product } from '../../data/product'
+import type { ProductImage } from '../../data/products'
 
 interface ProductLightboxProps {
+  image: ProductImage
   open: boolean
   onClose: () => void
 }
 
-export default function ProductLightbox({ open, onClose }: ProductLightboxProps) {
-  const { box } = product.media
+export default function ProductLightbox({ image, open, onClose }: ProductLightboxProps) {
   return (
     <Lightbox
       open={open}
       close={onClose}
       plugins={[Zoom]}
-      slides={[{ src: '/media/product/multashva-box-1600.png', width: box.width, height: box.height, alt: box.alt }]}
+      slides={[{ src: image.src, width: image.width, height: image.height, alt: image.alt }]}
       carousel={{ finite: true }}
       render={{ buttonPrev: () => null, buttonNext: () => null }}
       zoom={{ maxZoomPixelRatio: 3, scrollToZoom: true, doubleTapDelay: 300 }}

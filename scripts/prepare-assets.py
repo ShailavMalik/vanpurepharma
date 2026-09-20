@@ -66,6 +66,7 @@ def prepare_logo():
     square = Image.new("RGBA", (side, side), (0, 0, 0, 0))
     square.paste(mark, ((side - mark.width) // 2, (side - mark.height) // 2), mark)
     square.save(PUBLIC / "media" / "logo" / "vanpure-mark.png", optimize=True)
+    square.resize((96, 96), Image.LANCZOS).save(PUBLIC / "media" / "logo" / "vanpure-mark-96.png", optimize=True)
     return square
 
 
@@ -136,11 +137,10 @@ def cut_out_box(img: Image.Image) -> Image.Image:
 def prepare_product():
     box = cut_out_box(Image.open(BOX_SRC))
     out_dir = PUBLIC / "media" / "product"
-    for width in (1600, 800):
+    for width in (1600, 800, 400):
         scale = width / box.width
         resized = box.resize((width, round(box.height * scale)), Image.LANCZOS)
         resized.save(out_dir / f"multashva-box-{width}.webp", quality=88, method=6)
-        resized.save(out_dir / f"multashva-box-{width}.png", optimize=True)
 
     # 16:9 poster for the product video: box centred on the site's dark canvas.
     poster = Image.new("RGB", (1280, 720), BG_DARK)

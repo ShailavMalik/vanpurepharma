@@ -1,18 +1,20 @@
 import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
 import { Link } from 'react-router-dom'
+import { featuredProduct, orderPath, productPath } from '../../data/products'
 import { site } from '../../data/site'
 import { generalChatUrl } from '../../lib/whatsapp'
 
 const productLinks = [
-  { label: 'Vanpure Multashva', to: '/#product' },
-  { label: 'Benefits', to: '/#benefits' },
-  { label: 'Ingredients', to: '/#ingredients' },
-  { label: 'Order', to: '/#order' },
+  { label: 'All products', to: '/products' },
+  { label: featuredProduct.name, to: productPath(featuredProduct) },
+  { label: 'Ingredients', to: `${productPath(featuredProduct)}#ingredients` },
+  { label: 'Order on WhatsApp', to: orderPath(featuredProduct) },
 ]
 
 const companyLinks = [
   { label: 'About us', to: '/about' },
   { label: 'Founder', to: '/about#founder' },
+  { label: 'How to order', to: '/#how-it-works' },
   { label: 'FAQ', to: '/#faq' },
 ]
 

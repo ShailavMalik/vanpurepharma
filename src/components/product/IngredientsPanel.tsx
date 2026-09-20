@@ -1,15 +1,17 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
-import { ingredientGroups, product, type Ingredient } from '../../data/product'
+import type { Ingredient, Product } from '../../data/products'
 import { easeOutExpo } from '../../lib/motion'
 import { GlassCard } from '../ui/GlassCard'
 import { Reveal } from '../ui/Reveal'
 import { SectionHeading } from '../ui/SectionHeading'
 import { SegmentedControl } from '../ui/SegmentedControl'
 
-export function IngredientsPanel() {
-  const [groupId, setGroupId] = useState(ingredientGroups[0].id)
-  const group = ingredientGroups.find((g) => g.id === groupId) ?? ingredientGroups[0]
+export function IngredientsPanel({ product }: { product: Product }) {
+  const groups = product.ingredientGroups
+  const [groupId, setGroupId] = useState(groups[0].id)
+  const group = groups.find((g) => g.id === groupId) ?? groups[0]
+  const total = groups.reduce((sum, g) => sum + g.items.length, 0)
 
   return (
     <section id="ingredients" className="section-pad scroll-mt-24">
@@ -18,7 +20,7 @@ export function IngredientsPanel() {
           eyebrow="Inside every softgel"
           title={
             <>
-              <span className="text-gradient-brand">15 actives.</span> Nothing you don&apos;t need.
+              <span className="text-gradient-brand">{total} actives.</span> Nothing you don&apos;t need.
             </>
           }
           description="Herbal adaptogens, essential vitamins and minerals, and amino acids, each at a dose that does its job."
@@ -26,15 +28,10 @@ export function IngredientsPanel() {
 
         <Reveal className="mt-10 flex justify-center">
           <SegmentedControl
-            id="ingredients"
+            id={`${product.slug}-ingredients`}
             value={groupId}
             onChange={setGroupId}
-            options={ingredientGroups.map((g) => ({
-              value: g.id,
-              label: g.label,
-              shortLabel: g.shortLabel,
-              count: g.items.length,
-            }))}
+            options={groups.map((g) => ({ value: g.id, label: g.label, shortLabel: g.shortLabel, count: g.items.length }))}
           />
         </Reveal>
 
@@ -72,9 +69,7 @@ function IngredientRow({ item, index }: { item: Ingredient; index: number }) {
       transition={{ delay: index * 0.04, duration: 0.4, ease: easeOutExpo }}
       className="grid gap-2 px-4 py-4 sm:px-5 md:grid-cols-[minmax(0,1.3fr)_minmax(0,0.9fr)_minmax(0,2fr)] md:items-center md:gap-6"
     >
-      <div>
-        <p className="font-display font-semibold">{item.name}</p>
-      </div>
+      <p className="font-display font-semibold">{item.name}</p>
       <div className="flex items-center gap-3">
         <span className="text-gradient-gold shrink-0 font-display text-sm font-semibold tabular">{item.strength}</span>
         {item.rda !== undefined && (

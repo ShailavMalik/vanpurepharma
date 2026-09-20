@@ -1,5 +1,5 @@
 import { WhatsAppIcon } from '../ui/BrandIcons'
-import { product } from '../../data/product'
+import { featuredProduct as product, orderPath } from '../../data/products'
 import { formatInr } from '../../lib/format'
 import { Button } from '../ui/Button'
 import { GlassCard } from '../ui/GlassCard'
@@ -22,7 +22,7 @@ export function CtaBand() {
               Order in two taps on WhatsApp.
             </p>
             <div className="mt-8 flex justify-center">
-              <Button to="/#order" size="lg" icon={<WhatsAppIcon />}>
+              <Button to={orderPath(product)} size="lg" icon={<WhatsAppIcon />}>
                 Order on WhatsApp
               </Button>
             </div>

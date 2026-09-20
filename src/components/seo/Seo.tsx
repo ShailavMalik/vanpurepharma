@@ -1,12 +1,22 @@
 import { site } from '../../data/site'
 
+type JsonLdNode = Record<string, unknown>
+
 interface SeoProps {
   title: string
   description: string
   /** Path starting with "/", used for the canonical and OG url. */
   path: string
   type?: 'website' | 'article' | 'product'
-  jsonLd?: Record<string, unknown> | Record<string, unknown>[]
+  jsonLd?: JsonLdNode | JsonLdNode[]
+}
+
+/** Merges nodes into one schema.org graph so a page emits a single script tag. */
+function toGraph(nodes: JsonLdNode[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': nodes.map(({ '@context': _context, ...node }) => node),
+  }
 }
 
 /**
@@ -16,7 +26,7 @@ interface SeoProps {
 export function Seo({ title, description, path, type = 'website', jsonLd }: SeoProps) {
   const url = `${site.url}${path === '/' ? '/' : path}`
   const image = `${site.url}/og-image.jpg`
-  const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
+  const nodes = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : []
 
   return (
     <>
@@ -36,11 +46,7 @@ export function Seo({ title, description, path, type = 'website', jsonLd }: SeoP
       <meta name="twitter:title" content={title} />
       <meta name="twitter:description" content={description} />
       <meta name="twitter:image" content={image} />
-      {jsonLdList.map((data, index) => (
-        <script key={index} type="application/ld+json">
-          {JSON.stringify(data)}
-        </script>
-      ))}
+      {nodes.length > 0 && <script type="application/ld+json">{JSON.stringify(toGraph(nodes))}</script>}
     </>
   )
 }

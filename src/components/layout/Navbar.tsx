@@ -3,6 +3,7 @@ import { WhatsAppIcon } from '../ui/BrandIcons'
 import { AnimatePresence, motion } from 'motion/react'
 import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { featuredProduct, orderPath } from '../../data/products'
 import { navLinks, site } from '../../data/site'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
 import { useScrolled } from '../../hooks/useScrolled'
@@ -13,8 +14,10 @@ import { Logo } from '../ui/Logo'
 
 function isActive(href: string, pathname: string, hash: string) {
   if (href.startsWith('/#')) return pathname === '/' && hash === href.slice(1)
-  return pathname === href
+  return pathname === href || pathname.startsWith(`${href}/`)
 }
+
+const orderHref = orderPath(featuredProduct)
 
 export function Navbar() {
   const scrolled = useScrolled(40)
@@ -60,7 +63,7 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Button to="/#order" size="sm" className="max-sm:px-3" icon={<WhatsAppIcon />} aria-label="Order on WhatsApp" onClick={close}>
+          <Button to={orderHref} size="sm" className="max-sm:px-3" icon={<WhatsAppIcon />} aria-label="Order on WhatsApp" onClick={close}>
             <span className="hidden sm:inline">Order on WhatsApp</span>
           </Button>
           <button
@@ -111,7 +114,7 @@ export function Navbar() {
               ))}
             </motion.ul>
             <div className="mt-auto flex flex-col gap-3">
-              <Button to="/#order" size="lg" icon={<WhatsAppIcon />} onClick={close}>
+              <Button to={orderHref} size="lg" icon={<WhatsAppIcon />} onClick={close}>
                 Order on WhatsApp
               </Button>
               <a
