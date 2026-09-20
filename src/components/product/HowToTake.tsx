@@ -15,7 +15,7 @@ export function HowToTake() {
         <RevealGroup className="relative mt-12 grid gap-4 md:grid-cols-3 md:gap-6">
           <span
             aria-hidden
-            className="absolute left-7 top-8 bottom-8 w-px border-l border-dashed border-emerald/40 md:left-[16.6%] md:right-[16.6%] md:top-11 md:bottom-auto md:h-px md:w-auto md:border-l-0 md:border-t"
+            className="absolute left-11 top-8 bottom-8 w-px border-l border-dashed border-emerald/40 md:left-[16.6%] md:right-[16.6%] md:top-11 md:bottom-auto md:h-px md:w-auto md:border-l-0 md:border-t"
           />
           {dosageSteps.map((step, index) => {
             const Icon = stepIcons[index]

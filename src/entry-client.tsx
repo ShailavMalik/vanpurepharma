@@ -13,8 +13,8 @@ const app = (
   </StrictMode>
 )
 
-// Prerendered pages hydrate; the dev server (empty root) mounts fresh.
-if (root.hasChildNodes()) {
+// Prerendered pages hydrate; the dev server (root holds only a placeholder comment) mounts fresh.
+if (root.firstElementChild) {
   hydrateRoot(root, app)
 } else {
   createRoot(root).render(app)

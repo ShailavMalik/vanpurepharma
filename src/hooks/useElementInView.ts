@@ -6,10 +6,7 @@ export function useElementInView(id: string, rootMargin = '0px'): boolean {
 
   useEffect(() => {
     const element = document.getElementById(id)
-    if (!element) {
-      setInView(false)
-      return
-    }
+    if (!element) return
     const observer = new IntersectionObserver(([entry]) => setInView(entry.isIntersecting), { rootMargin })
     observer.observe(element)
     return () => observer.disconnect()

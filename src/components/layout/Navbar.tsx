@@ -1,6 +1,7 @@
-import { Menu, MessageCircle, X } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { WhatsAppIcon } from '../ui/BrandIcons'
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { navLinks, site } from '../../data/site'
 import { useBodyScrollLock } from '../../hooks/useBodyScrollLock'
@@ -20,10 +21,7 @@ export function Navbar() {
   const [open, setOpen] = useState(false)
   const location = useLocation()
   useBodyScrollLock(open)
-
-  useEffect(() => {
-    setOpen(false)
-  }, [location])
+  const close = () => setOpen(false)
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-3 pt-3 sm:px-4 sm:pt-4">
@@ -62,11 +60,8 @@ export function Navbar() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <Button to="/#order" size="sm" className="hidden sm:inline-flex" icon={<MessageCircle />}>
-            Order on WhatsApp
-          </Button>
-          <Button to="/#order" size="sm" className="sm:hidden !px-3" aria-label="Order on WhatsApp">
-            <MessageCircle className="size-5" />
+          <Button to="/#order" size="sm" className="max-sm:px-3" icon={<WhatsAppIcon />} aria-label="Order on WhatsApp" onClick={close}>
+            <span className="hidden sm:inline">Order on WhatsApp</span>
           </Button>
           <button
             type="button"
@@ -107,6 +102,7 @@ export function Navbar() {
                 >
                   <Link
                     to={link.href}
+                    onClick={close}
                     className="block rounded-2xl px-4 py-4 font-display text-3xl font-semibold tracking-tight text-fg transition-colors hover:bg-white/5"
                   >
                     {link.label}
@@ -115,7 +111,7 @@ export function Navbar() {
               ))}
             </motion.ul>
             <div className="mt-auto flex flex-col gap-3">
-              <Button to="/#order" size="lg" icon={<MessageCircle />}>
+              <Button to="/#order" size="lg" icon={<WhatsAppIcon />} onClick={close}>
                 Order on WhatsApp
               </Button>
               <a

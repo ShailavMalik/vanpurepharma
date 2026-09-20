@@ -65,7 +65,7 @@ export function MediaStage() {
                       decoding="async"
                       className="h-[86%] w-auto max-w-[92%] object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.6)]"
                     />
-                    <span className="glass-3 pointer-events-none absolute bottom-4 right-4 flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium text-fg">
+                    <span className="glass-3 pointer-events-none absolute right-3 top-3 flex items-center gap-2 rounded-full px-3.5 py-2 text-xs font-medium text-fg sm:right-4 sm:top-4">
                       <ZoomIn className="size-4" /> Tap to zoom
                     </span>
                   </button>

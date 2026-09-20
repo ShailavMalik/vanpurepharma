@@ -28,3 +28,6 @@ _local/
 
 # Vercel
 .vercel
+
+# Playwright MCP output
+.playwright-mcp/

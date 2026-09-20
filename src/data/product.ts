@@ -47,7 +47,7 @@ export const product = {
       src: '/media/product/multashva-box-1600.webp',
       srcSet: '/media/product/multashva-box-800.webp 800w, /media/product/multashva-box-1600.webp 1600w',
       width: 1600,
-      height: 588,
+      height: 1050,
       alt: 'Vanpure Multashva box: 100 softgel capsules, complete vitality and wellness formula',
     },
     video: {

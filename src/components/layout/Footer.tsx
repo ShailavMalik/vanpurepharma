@@ -1,4 +1,4 @@
-import { Instagram, MessageCircle } from 'lucide-react'
+import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
 import { Link } from 'react-router-dom'
 import { site } from '../../data/site'
 import { generalChatUrl } from '../../lib/whatsapp'
@@ -34,7 +34,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="glass-1 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fg/90 transition-colors hover:bg-white/10"
               >
-                <MessageCircle className="size-4 text-wa" /> WhatsApp
+                <WhatsAppIcon className="size-4 text-wa" /> WhatsApp
               </a>
               <a
                 href={site.instagram.url}
@@ -42,7 +42,7 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="glass-1 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fg/90 transition-colors hover:bg-white/10"
               >
-                <Instagram className="size-4" /> @{site.instagram.handle}
+                <InstagramIcon className="size-4" /> @{site.instagram.handle}
               </a>
             </div>
           </div>

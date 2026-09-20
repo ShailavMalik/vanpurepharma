@@ -1,4 +1,5 @@
-import { ArrowDown, MessageCircle, ShieldCheck } from 'lucide-react'
+import { ArrowDown, ShieldCheck } from 'lucide-react'
+import { WhatsAppIcon } from '../ui/BrandIcons'
 import { motion, useReducedMotion } from 'motion/react'
 import { product } from '../../data/product'
 import { site } from '../../data/site'
@@ -25,7 +26,7 @@ export function Hero() {
             </Chip>
           </motion.div>
 
-          <h1 className="mt-6 text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[1.02]">
+          <h1 className="mt-6 text-[clamp(2.5rem,4.6vw,4rem)] font-bold leading-[1.04] tracking-[-0.03em]">
             <span className="block overflow-hidden pb-1">
               <motion.span
                 className="block"
@@ -68,7 +69,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div {...enter(0.55)} className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button to="/#order" size="lg" icon={<MessageCircle />}>
+            <Button to="/#order" size="lg" icon={<WhatsAppIcon />}>
               Order on WhatsApp
             </Button>
             <Button to="/#ingredients" size="lg" variant="ghost" iconRight={<ArrowDown />}>

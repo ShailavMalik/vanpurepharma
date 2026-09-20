@@ -106,19 +106,18 @@ def cut_out_box(img: Image.Image) -> Image.Image:
     box_bottom = int(dark_rows.max())
     background[box_bottom + 2 :] = True
 
-    # The box casts a soft neutral-grey shadow onto the backdrop. Any large
-    # zero-saturation grey region that touches the background is part of it;
-    # grey anti-aliased text on the box is small and enclosed, so it survives.
-    shadow_candidates = (saturation <= 8) & (grey > 110) & (grey < 243)
-    shadow_labels, shadow_count = ndimage.label(shadow_candidates)
-    if shadow_count:
-        near_background = ndimage.binary_dilation(background, iterations=3)
-        touching = np.unique(shadow_labels[near_background])
-        touching = touching[touching > 0]
-        sizes = ndimage.sum(shadow_candidates, shadow_labels, touching)
-        big_touching = touching[np.asarray(sizes) > 1500]
-        background |= np.isin(shadow_labels, big_touching)
-    background = ndimage.binary_closing(background, iterations=2)
+    # The box casts a soft grey shadow onto the floor, the same tone as its grey
+    # side panel. The floor starts below the box's bottom edge, which is dark or
+    # coloured in every column, so neutral grey below that edge is shadow.
+    boxish = (grey < 130) | (saturation > 12)
+    row_index = np.arange(grey.shape[0])[:, None]
+    bottom_edge = np.where(boxish.any(axis=0), (boxish * row_index).max(axis=0), -1)
+    bottom_edge = ndimage.median_filter(bottom_edge, size=31)
+    floor = row_index > bottom_edge[None, :] + 2
+    background |= floor & (saturation <= 10) & (grey > 120)
+    background = ndimage.binary_closing(background, iterations=2, border_value=1)
+    background[:2, :] = background[-2:, :] = True
+    background[:, :2] = background[:, -2:] = True
 
     # Keep only the box itself; drops sparkles and specks left in the backdrop.
     foreground_labels, count = ndimage.label(~background)

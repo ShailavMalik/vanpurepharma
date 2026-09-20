@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import { WhatsAppIcon } from '../ui/BrandIcons'
 import { product } from '../../data/product'
 import { formatInr } from '../../lib/format'
 import { Button } from '../ui/Button'
@@ -22,7 +22,7 @@ export function CtaBand() {
               Order in two taps on WhatsApp.
             </p>
             <div className="mt-8 flex justify-center">
-              <Button to="/#order" size="lg" icon={<MessageCircle />}>
+              <Button to="/#order" size="lg" icon={<WhatsAppIcon />}>
                 Order on WhatsApp
               </Button>
             </div>

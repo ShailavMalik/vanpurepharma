@@ -11,7 +11,7 @@ interface LogoProps {
 export function Logo({ className, wordmark = 'sm' }: LogoProps) {
   return (
     <Link to="/" className={cn('flex items-center gap-2.5', className)} aria-label={`${site.name} home`}>
-      <img src="/media/logo/vanpure-mark.png" alt="" width={40} height={40} className="size-10 shrink-0" />
+      <img src="/media/logo/vanpure-mark.png" alt="" width={40} height={40} className="size-10 shrink-0 drop-shadow-[0_0_10px_rgba(139,92,246,0.55)]" />
       {wordmark !== 'never' && (
         <span
           className={cn(

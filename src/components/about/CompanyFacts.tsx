@@ -1,4 +1,5 @@
-import { Globe, Instagram, MapPin, MessageCircle } from 'lucide-react'
+import { Globe, MapPin } from 'lucide-react'
+import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
 import { site } from '../../data/site'
 import { generalChatUrl } from '../../lib/whatsapp'
 import { GlassCard } from '../ui/GlassCard'
@@ -6,8 +7,8 @@ import { Reveal } from '../ui/Reveal'
 
 export function CompanyFacts() {
   const facts = [
-    { icon: MessageCircle, label: 'WhatsApp', value: site.whatsapp.display, href: generalChatUrl },
-    { icon: Instagram, label: 'Instagram', value: `@${site.instagram.handle}`, href: site.instagram.url },
+    { icon: WhatsAppIcon, label: 'WhatsApp', value: site.whatsapp.display, href: generalChatUrl },
+    { icon: InstagramIcon, label: 'Instagram', value: `@${site.instagram.handle}`, href: site.instagram.url },
     { icon: Globe, label: 'Website', value: site.url.replace('https://', ''), href: site.url },
     ...(site.address ? [{ icon: MapPin, label: 'Address', value: site.address, href: undefined }] : []),
   ]

@@ -4,13 +4,4 @@ import { defineConfig } from 'vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  build: {
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          motion: ['motion'],
-        },
-      },
-    },
-  },
 })

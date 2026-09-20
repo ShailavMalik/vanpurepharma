@@ -1,4 +1,5 @@
-import { Check, MessageCircle, Minus, Plus } from 'lucide-react'
+import { Check, Minus, Plus } from 'lucide-react'
+import { WhatsAppIcon } from '../ui/BrandIcons'
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
 import { product } from '../../data/product'
@@ -54,7 +55,7 @@ export function OrderCard() {
           <GlassCard border="gold" className="p-5 sm:p-8">
             <div className="flex items-center gap-4">
               <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-2xl bg-bg-2 p-1.5">
-                <img src="/media/product/multashva-box-800.webp" alt="" width={96} height={35} className="w-full" loading="lazy" />
+                <img src="/media/product/multashva-box-800.webp" alt="" width={96} height={64} className="h-full w-auto object-contain" loading="lazy" />
               </div>
               <div className="min-w-0">
                 <h3 className="text-lg font-semibold leading-tight">{product.name}</h3>
@@ -159,7 +160,7 @@ export function OrderCard() {
             <Button
               href={buildOrderUrl(strips)}
               size="lg"
-              icon={<MessageCircle />}
+              icon={<WhatsAppIcon />}
               className="mt-6 w-full"
               onClick={() => setToast(true)}
               data-testid="order-whatsapp"

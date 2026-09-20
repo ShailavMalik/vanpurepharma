@@ -21,7 +21,7 @@ export function SegmentedControl<T extends string>({ id, options, value, onChang
     <div
       role="tablist"
       aria-label="Ingredient groups"
-      className={cn('glass-2 no-scrollbar inline-flex max-w-full gap-1 overflow-x-auto rounded-full p-1.5', className)}
+      className={cn('glass-2 flex w-full gap-1 rounded-full p-1.5 sm:inline-flex sm:w-auto', className)}
     >
       {options.map((option) => {
         const active = option.value === value
@@ -33,7 +33,7 @@ export function SegmentedControl<T extends string>({ id, options, value, onChang
             aria-selected={active}
             onClick={() => onChange(option.value)}
             className={cn(
-              'relative h-10 shrink-0 rounded-full px-4 text-sm font-medium transition-colors duration-200 sm:px-5',
+              'relative h-10 min-w-0 flex-1 rounded-full px-2 text-sm font-medium transition-colors duration-200 sm:flex-none sm:px-5',
               active ? 'text-white' : 'text-muted hover:text-fg',
             )}
           >
@@ -44,13 +44,13 @@ export function SegmentedControl<T extends string>({ id, options, value, onChang
                 transition={{ type: 'spring', stiffness: 400, damping: 32 }}
               />
             )}
-            <span className="relative flex items-center gap-2">
+            <span className="relative flex items-center justify-center gap-2">
               <span className="sm:hidden">{option.shortLabel ?? option.label}</span>
               <span className="hidden sm:inline">{option.label}</span>
               {option.count !== undefined && (
                 <span
                   className={cn(
-                    'rounded-full px-1.5 py-0.5 text-[11px] leading-none tabular',
+                    'hidden rounded-full px-1.5 py-0.5 text-[11px] leading-none tabular sm:inline',
                     active ? 'bg-white/20 text-white' : 'bg-white/5 text-muted',
                   )}
                 >

@@ -1,4 +1,4 @@
-import { MessageCircle } from 'lucide-react'
+import { WhatsAppIcon } from '../ui/BrandIcons'
 import { AnimatePresence, motion } from 'motion/react'
 import { useLocation } from 'react-router-dom'
 import { product } from '../../data/product'
@@ -35,7 +35,7 @@ export function MobileOrderBar() {
                 <span className="ml-2 text-sm font-medium text-muted/70 line-through">{formatInr(product.price.mrpPerStrip)}</span>
               </p>
             </div>
-            <Button to="/#order" size="sm" icon={<MessageCircle />}>
+            <Button to="/#order" size="sm" icon={<WhatsAppIcon />}>
               Order
             </Button>
           </div>

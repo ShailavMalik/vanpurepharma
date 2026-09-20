@@ -1,49 +1,54 @@
-import { motion, type HTMLMotionProps } from 'motion/react'
-import { fadeUp, stagger, viewportOnce } from '../../lib/motion'
+import { motion } from 'motion/react'
+import type { ReactNode } from 'react'
+import { fadeUp, revealTransition, stagger, viewportOnce } from '../../lib/motion'
 
-type RevealProps = HTMLMotionProps<'div'> & {
+interface RevealProps {
+  children?: ReactNode
+  className?: string
   delay?: number
 }
 
 /** Fades content up once when it scrolls into view. */
-export function Reveal({ delay = 0, children, ...rest }: RevealProps) {
+export function Reveal({ children, className, delay = 0 }: RevealProps) {
   return (
     <motion.div
+      className={className}
       variants={fadeUp}
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
-      transition={{ ...fadeUp.visible, delay }}
-      {...rest}
+      transition={{ ...revealTransition, delay }}
     >
       {children}
     </motion.div>
   )
 }
 
-type RevealGroupProps = HTMLMotionProps<'div'> & {
+interface RevealGroupProps {
+  children?: ReactNode
+  className?: string
   delayChildren?: number
   staggerChildren?: number
 }
 
 /** Parent that staggers its `RevealItem` children. */
-export function RevealGroup({ delayChildren = 0, staggerChildren = 0.07, children, ...rest }: RevealGroupProps) {
+export function RevealGroup({ children, className, delayChildren = 0, staggerChildren = 0.07 }: RevealGroupProps) {
   return (
     <motion.div
+      className={className}
       variants={stagger(delayChildren, staggerChildren)}
       initial="hidden"
       whileInView="visible"
       viewport={viewportOnce}
-      {...rest}
     >
       {children}
     </motion.div>
   )
 }
 
-export function RevealItem({ children, ...rest }: HTMLMotionProps<'div'>) {
+export function RevealItem({ children, className }: { children?: ReactNode; className?: string }) {
   return (
-    <motion.div variants={fadeUp} {...rest}>
+    <motion.div className={className} variants={fadeUp}>
       {children}
     </motion.div>
   )

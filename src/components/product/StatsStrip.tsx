@@ -11,7 +11,7 @@ export function StatsStrip() {
           <RevealItem key={stat.label}>
             <GlassCard tier={1} className="px-5 py-6 text-center">
               <p className="font-display text-4xl font-bold tabular md:text-5xl">
-                <CountUp value={stat.value} className="text-gradient-brand" />
+                <CountUp value={stat.value} from={0} className="text-gradient-brand" />
               </p>
               <p className="mt-2 text-sm text-muted">{stat.label}</p>
             </GlassCard>

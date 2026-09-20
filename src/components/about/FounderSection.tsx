@@ -12,7 +12,7 @@ export function FounderSection() {
       <div className="container-site">
         <SectionHeading eyebrow="The founder" title="A message from the person behind the formula." />
 
-        <div className="mt-12 grid items-start gap-10 md:grid-cols-2 md:gap-12 lg:gap-16">
+        <div className="mt-12 grid items-start gap-10 md:grid-cols-[minmax(0,440px)_minmax(0,360px)] md:justify-center md:gap-12 lg:gap-20">
           <Reveal className="flex flex-col items-center md:items-start">
             <div className="relative w-full max-w-[380px]">
               <div
