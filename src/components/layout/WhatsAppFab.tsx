@@ -1,23 +1,17 @@
-import { WhatsAppIcon } from '../ui/BrandIcons'
-import { generalChatUrl } from '../../lib/whatsapp'
+import { askUrl } from '../../lib/whatsapp'
+import { WhatsAppIcon } from '../ui/Icons'
 
-/** Desktop floating chat button; phones get the sticky order bar instead. */
+/** Desktop floating chat button; phones use each page's sticky bar instead. */
 export function WhatsAppFab() {
   return (
     <a
-      href={generalChatUrl}
+      href={askUrl}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat with us on WhatsApp"
-      className="group fixed bottom-6 right-6 z-40 hidden md:flex"
+      className="fixed right-7 bottom-7 z-40 hidden size-15 items-center justify-center rounded-full bg-[linear-gradient(180deg,#10825f,#08583f)] text-white shadow-[0_18px_32px_-12px_rgba(11,107,79,0.7)] transition-transform hover:scale-105 motion-safe:animate-pulse-ring lg:flex"
     >
-      <span className="absolute inset-0 rounded-full bg-wa/50 motion-safe:animate-pulse-ring" aria-hidden />
-      <span className="relative flex size-14 items-center justify-center rounded-full bg-wa text-[#052e16] shadow-[0_12px_32px_-8px_rgba(37,211,102,0.8)] transition-transform duration-200 group-hover:scale-105">
-        <WhatsAppIcon className="size-7" />
-      </span>
-      <span className="glass-3 pointer-events-none absolute right-full top-1/2 mr-3 -translate-y-1/2 whitespace-nowrap rounded-full px-3 py-1.5 text-sm text-fg opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-        Chat with us
-      </span>
+      <WhatsAppIcon size={26} />
     </a>
   )
 }

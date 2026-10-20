@@ -1,42 +1,27 @@
-import { AnimatePresence, motion } from 'motion/react'
-import { Outlet, useLocation } from 'react-router-dom'
-import { easeOutExpo } from '../../lib/motion'
+import { Outlet } from 'react-router-dom'
+import { Blobs } from '../ui/Blobs'
 import { Footer } from './Footer'
-import { GradientBlobs } from './GradientBlobs'
-import { MobileOrderBar } from './MobileOrderBar'
-import { Navbar } from './Navbar'
+import { Header } from './Header'
 import { ScrollManager } from './ScrollManager'
 import { WhatsAppFab } from './WhatsAppFab'
 
 export function Layout() {
-  const { pathname } = useLocation()
-
   return (
-    <>
+    <div className="relative flex min-h-svh flex-col">
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-gradient-brand focus:px-4 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[60] focus:rounded-full focus:bg-green focus:px-4 focus:py-2 focus:text-white"
       >
         Skip to content
       </a>
-      <GradientBlobs />
+      <Blobs />
       <ScrollManager />
-      <Navbar />
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.main
-          id="main"
-          key={pathname}
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -8 }}
-          transition={{ duration: 0.3, ease: easeOutExpo }}
-        >
-          <Outlet />
-        </motion.main>
-      </AnimatePresence>
+      <Header />
+      <main id="main" className="relative flex-1">
+        <Outlet />
+      </main>
       <Footer />
-      <MobileOrderBar />
       <WhatsAppFab />
-    </>
+    </div>
   )
 }

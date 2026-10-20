@@ -1,6 +1,6 @@
 export const site = {
   name: 'Vanpure Pharma',
-  tagline: 'Science-backed nutraceuticals for everyday vitality',
+  tagline: 'Science-backed supplements for adults',
   url: 'https://vanpurepharma.com',
   whatsapp: {
     /** International format without "+", as required by wa.me links. */
@@ -16,11 +16,7 @@ export const site = {
   address: '',
   fssaiLicence: '',
   launchDate: '2026-09-22',
-  launchDateDisplay: '22 Sep 2026',
+  launchDateDisplay: '22 September 2026',
+  disclaimer:
+    'Nutraceutical for adults. Not intended to diagnose, treat, cure or prevent any disease. Consult a health professional before use if pregnant, nursing, or on medication.',
 } as const
-
-export const navLinks = [
-  { label: 'Products', href: '/products' },
-  { label: 'How to order', href: '/#how-it-works' },
-  { label: 'About', href: '/about' },
-] as const

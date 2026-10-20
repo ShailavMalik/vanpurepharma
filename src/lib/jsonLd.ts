@@ -1,6 +1,6 @@
 import { founder } from '../data/about'
 import { homeFaqs } from '../data/home'
-import { productPath, products, type FaqItem, type Product } from '../data/products'
+import { productPath, type FaqItem, type Product } from '../data/products'
 import { site } from '../data/site'
 
 export const organizationJsonLd = {
@@ -46,26 +46,21 @@ export function productJsonLd(product: Product) {
     '@type': 'Product',
     name: product.name,
     description: product.description,
-    image: [`${site.url}${product.media.image.src}`],
+    image: product.gallery.map((image) => `${site.url}${image.src}`),
     brand: { '@type': 'Brand', name: site.name },
     category: 'Dietary Supplement',
     url: `${site.url}${productPath(product)}`,
-    offers: {
+    offers: product.packs.map((pack) => ({
       '@type': 'Offer',
+      name: `${pack.days}-day pack (${pack.strips} strips)`,
       url: `${site.url}${productPath(product)}#order`,
-      priceCurrency: product.price.currency,
-      price: product.price.perStrip,
+      priceCurrency: 'INR',
+      price: pack.price,
       priceValidFrom: site.launchDate,
       availability: 'https://schema.org/InStock',
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@type': 'Organization', name: site.name },
-      eligibleQuantity: {
-        '@type': 'QuantitativeValue',
-        unitText: `strip of ${product.softgelsPerStrip} softgels`,
-        minValue: product.order.minStrips,
-        maxValue: product.order.maxStrips,
-      },
-    },
+    })),
   }
 }
 
@@ -80,18 +75,6 @@ export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
       item: `${site.url}${item.path}`,
     })),
   }
-}
-
-export const productListJsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: `${site.name} products`,
-  itemListElement: products.map((product, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    url: `${site.url}${productPath(product)}`,
-    name: product.name,
-  })),
 }
 
 export const aboutPageJsonLd = {

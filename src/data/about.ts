@@ -1,8 +1,10 @@
+import { featuredProduct } from './products'
+import { site } from './site'
+
 export const founder = {
   name: 'Vansh Choudhary',
   role: 'Founder & Owner, Vanpure Pharma',
-  quote:
-    'At Vanpure Pharma, our core commitment is to design science-backed health solutions. Vanpure Multashva brings together pure herbal extracts and bioavailable essential nutrients to keep you vibrant, energized, and healthy every day.',
+  quote: 'Our core commitment is to design science-backed health solutions that keep you vibrant, energised and healthy every day.',
   photo: {
     src: '/media/founder/vansh-choudhary.webp',
     width: 800,
@@ -13,30 +15,39 @@ export const founder = {
   video: {
     src: '/media/founder/founder-message.mp4',
     poster: '/media/founder/founder-poster.webp',
-    title: 'A message from the founder',
+    title: 'A message from Vansh',
+    duration: '0:29',
   },
 } as const
 
 export const mission = {
-  headline: 'Wellness that people can actually take control of.',
+  headline: 'Science-backed supplements, so a small daily habit improves everyday health.',
   paragraphs: [
-    'At Vanpure Pharma, we are committed to improving wellness through scientifically-backed nutraceutical supplements. Our mission is to empower people to take control of their health with high-quality products designed to support every aspect of well-being.',
-    'We believe optimal health should be accessible to everyone. Through research and innovation, our formulations meet the highest standards of safety and efficacy, so that a small daily habit can make a lasting difference.',
+    'Vanpure Pharma is a new Indian nutraceutical company making dietary supplements for adults. Every formula is evidence-led and made in certified pharmaceutical facilities.',
+    `We started with one product, ${featuredProduct.shortName}, launched on ${site.launchDateDisplay}. You order in a WhatsApp chat with our team, so there is always a real person to answer your questions.`,
   ],
-  chips: ['Science-backed formulas', 'Made in India', 'Nutraceutical for adults'],
 } as const
 
 export const values = [
   {
-    title: 'Quality You Can Trust',
-    description: 'Every product goes through rigorous testing for safety, purity, and potency before it reaches you.',
+    title: 'Quality you can trust',
+    text: 'Made in certified pharmaceutical facilities, with strict purity and potency checks.',
+    icon: 'shield',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E2F5EB)',
+    iconBg: 'linear-gradient(135deg, #10825F, #1C8F9E)',
   },
   {
-    title: 'Evidence-Based Formulations',
-    description: 'Our supplements are developed from the latest scientific research, not trends.',
+    title: 'Evidence-based formulations',
+    text: 'Actives and doses chosen on evidence, and every one listed openly.',
+    icon: 'flask',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E3EEFC)',
+    iconBg: 'linear-gradient(135deg, #1C8F9E, #4F8ED8)',
   },
   {
-    title: 'Eco-Friendly Practices',
-    description: 'We are dedicated to sustainable sourcing and environmental responsibility at every step.',
+    title: 'Eco-friendly practices',
+    text: 'Responsible sourcing, minimal packaging and less waste at every step.',
+    icon: 'leaf',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E2F5EB)',
+    iconBg: 'linear-gradient(135deg, #10825F, #3FBF8E)',
   },
 ] as const

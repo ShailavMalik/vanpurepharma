@@ -1,100 +1,84 @@
-import { InstagramIcon, WhatsAppIcon } from '../ui/BrandIcons'
 import { Link } from 'react-router-dom'
-import { featuredProduct, orderPath, productPath } from '../../data/products'
+import { featuredProduct, productPath } from '../../data/products'
 import { site } from '../../data/site'
 import { generalChatUrl } from '../../lib/whatsapp'
 
-const productLinks = [
-  { label: 'All products', to: '/products' },
-  { label: featuredProduct.name, to: productPath(featuredProduct) },
-  { label: 'Ingredients', to: `${productPath(featuredProduct)}#ingredients` },
-  { label: 'Order on WhatsApp', to: orderPath(featuredProduct) },
-]
-
-const companyLinks = [
-  { label: 'About us', to: '/about' },
-  { label: 'Founder', to: '/about#founder' },
-  { label: 'How to order', to: '/#how-it-works' },
-  { label: 'FAQ', to: '/#faq' },
-]
-
 export function Footer() {
   return (
-    <footer className="relative mt-16 border-t border-white/[0.06] pb-28 md:pb-10">
-      <div className="container-site pt-14">
-        <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+    <footer className="relative mt-12 bg-[linear-gradient(180deg,rgba(255,255,255,0),rgba(217,242,230,0.75))] lg:mt-28">
+      <div className="container-site pb-6 pt-7 lg:pb-9 lg:pt-12">
+        <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr_1fr_1.2fr] lg:gap-8">
           <div>
-            <p className="font-display text-[clamp(2rem,5vw,3rem)] font-bold leading-none tracking-tight">
-              <span className="text-gradient-brand">Vanpure</span>
-              <span className="ml-2 font-medium text-fg/80">Pharma</span>
-            </p>
-            <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">{site.tagline}.</p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <a
-                href={generalChatUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-1 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fg/90 transition-colors hover:bg-white/10"
-              >
-                <WhatsAppIcon className="size-4 text-wa" /> WhatsApp
-              </a>
-              <a
-                href={site.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="glass-1 inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm text-fg/90 transition-colors hover:bg-white/10"
-              >
-                <InstagramIcon className="size-4" /> @{site.instagram.handle}
-              </a>
-            </div>
+            <div className="font-display text-xl font-extrabold lg:text-2xl">{site.name}</div>
+            <div className="mt-1 text-[13px] text-muted lg:mt-1.5 lg:text-sm">{site.tagline}.</div>
           </div>
-
-          <FooterColumn title="Product" links={productLinks} />
-          <FooterColumn title="Company" links={companyLinks} />
-
+          <div className="grid grid-cols-2 gap-4 lg:contents">
+            <FooterColumn
+              title="Shop"
+              links={[
+                { label: featuredProduct.shortName, to: productPath(featuredProduct) },
+                { label: 'How to order', to: '/#how' },
+              ]}
+            />
+            <FooterColumn
+              title="Company"
+              links={[
+                { label: 'About', to: '/about' },
+                { label: 'Instagram', to: site.instagram.url, external: true },
+              ]}
+            />
+          </div>
           <div>
-            <p className="eyebrow mb-4 text-fg/70">Contact</p>
-            <ul className="space-y-2 text-sm text-muted">
-              <li>
-                <a href={generalChatUrl} target="_blank" rel="noopener noreferrer" className="hover:text-fg">
-                  {site.whatsapp.display}
-                </a>
-              </li>
+            <div className="hidden text-xs font-extrabold tracking-[1px] text-muted uppercase lg:block">Contact</div>
+            <div className="mt-3 text-[13px] leading-[1.9] text-body lg:mt-1 lg:text-[15px] lg:leading-[2.6]">
+              WhatsApp{' '}
+              <a href={generalChatUrl} target="_blank" rel="noopener noreferrer" className="font-bold text-green">
+                {site.whatsapp.display}
+              </a>
+              <br />
+              Instagram{' '}
+              <a href={site.instagram.url} target="_blank" rel="noopener noreferrer" className="font-bold text-green">
+                @{site.instagram.handle}
+              </a>
+              <br />
+              {site.url.replace('https://', '')}
               {site.email && (
-                <li>
-                  <a href={`mailto:${site.email}`} className="hover:text-fg">
+                <>
+                  <br />
+                  <a href={`mailto:${site.email}`} className="font-bold text-green">
                     {site.email}
                   </a>
-                </li>
+                </>
               )}
-              {site.address && <li className="leading-relaxed">{site.address}</li>}
-              {site.fssaiLicence && <li>FSSAI Lic. No. {site.fssaiLicence}</li>}
-            </ul>
+            </div>
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-3 border-t border-white/[0.06] pt-6 text-xs text-muted/80 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} {site.name}. All rights reserved.</p>
-          <p className="max-w-xl leading-relaxed">
-            Nutraceutical for adults. Not intended to diagnose, treat, cure or prevent any disease. Consult a health
-            professional before use if pregnant, nursing, or on medication.
-          </p>
+        <div className="mt-5 flex flex-col gap-2.5 text-[11px] leading-relaxed text-muted lg:mt-8 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:border-t lg:border-ink/10 lg:pt-5 lg:text-xs">
+          <p className="m-0 max-w-[760px]">{site.disclaimer}</p>
+          <p className="m-0">© 2026 {site.name}</p>
         </div>
       </div>
     </footer>
   )
 }
 
-function FooterColumn({ title, links }: { title: string; links: { label: string; to: string }[] }) {
+function FooterColumn({ title, links }: { title: string; links: { label: string; to: string; external?: boolean }[] }) {
   return (
     <div>
-      <p className="eyebrow mb-4 text-fg/70">{title}</p>
-      <ul className="space-y-2">
+      <div className="text-[11px] font-extrabold tracking-[1px] text-muted uppercase lg:text-xs">{title}</div>
+      <ul className="m-0 mt-1 list-none p-0">
         {links.map((link) => (
-          <li key={link.to}>
-            <Link to={link.to} className="text-sm text-muted transition-colors hover:text-fg">
-              {link.label}
-            </Link>
+          <li key={link.label}>
+            {link.external ? (
+              <a href={link.to} target="_blank" rel="noopener noreferrer" className="flex min-h-10 items-center text-sm font-semibold text-green lg:text-[15px]">
+                {link.label}
+              </a>
+            ) : (
+              <Link to={link.to} className="flex min-h-10 items-center text-sm font-semibold text-green no-underline lg:text-[15px]">
+                {link.label}
+              </Link>
+            )}
           </li>
         ))}
       </ul>

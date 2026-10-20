@@ -1,107 +1,118 @@
-import { featuredProduct, orderPath, productPath } from './products'
+import { featuredProduct, productPath } from './products'
 import { site } from './site'
 
-export type HeroVisual = 'product' | 'price' | 'range'
-
-export interface HeroSlide {
+export interface Offer {
   id: string
-  eyebrow: string
+  badge: string
   title: string
-  highlight: string
-  description: string
-  primary: { label: string; to: string }
-  secondary?: { label: string; to: string; external?: boolean }
-  visual: HeroVisual
-  accent: 'gold' | 'brand'
+  subline: string
+  saving: string
+  tone: 'light' | 'dark'
+  image: 'pack' | 'trio'
+  to: string
 }
 
-export const heroSlides: HeroSlide[] = [
+const [starter, fullBox] = featuredProduct.packs
+
+export const offers: Offer[] = [
   {
-    id: 'launch',
-    eyebrow: `Launching ${site.launchDateDisplay}`,
-    title: 'Complete vitality,',
-    highlight: 'every single day.',
-    description: `${featuredProduct.name} brings herbal adaptogens, essential vitamins, minerals and amino acids into one daily softgel.`,
-    primary: { label: 'Order on WhatsApp', to: orderPath(featuredProduct) },
-    secondary: { label: 'View product', to: productPath(featuredProduct) },
-    visual: 'product',
-    accent: 'brand',
+    id: 'starter',
+    badge: 'Launch offer',
+    title: `${starter.days} days\nfor ₹${starter.price}`,
+    subline: `${starter.strips} strips`,
+    saving: `save ₹${starter.mrp - starter.price}`,
+    tone: 'light',
+    image: 'pack',
+    to: productPath(featuredProduct),
   },
   {
-    id: 'offer',
-    eyebrow: 'Special release pricing',
-    title: 'Launch offer:',
-    highlight: '₹75 a strip, not ₹120.',
-    description: 'Ten softgels per strip, a five-day supply. Order as few as one strip or a full box of ten, straight on WhatsApp.',
-    primary: { label: 'Claim launch price', to: orderPath(featuredProduct) },
-    secondary: { label: 'See what is inside', to: `${productPath(featuredProduct)}#ingredients` },
-    visual: 'price',
-    accent: 'gold',
-  },
-  {
-    id: 'range',
-    eyebrow: 'The Vanpure range',
-    title: 'One launch.',
-    highlight: 'A growing range.',
-    description: 'Multashva is the first of our science-backed formulas. Follow along to hear about the next ones first.',
-    primary: { label: 'Browse products', to: '/products' },
-    secondary: { label: `Follow @${site.instagram.handle}`, to: site.instagram.url, external: true },
-    visual: 'range',
-    accent: 'brand',
+    id: 'full-box',
+    badge: 'Full box',
+    title: `${fullBox.days} days\nfor ₹${fullBox.price}`,
+    subline: `${fullBox.strips} strips`,
+    saving: `save ₹${fullBox.mrp - fullBox.price}`,
+    tone: 'dark',
+    image: 'trio',
+    to: productPath(featuredProduct),
   },
 ]
 
 export const whyVanpure = [
   {
+    n: '01',
     title: 'Science-backed formulas',
-    description: 'Every ingredient earns its place with evidence, at a dose that does its job.',
+    text: 'Evidence-led choice of actives and doses.',
+    icon: 'flask',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E2F5EB)',
+    glow: 'rgba(110,214,170,0.5)',
+    iconBg: 'linear-gradient(135deg, #10825F, #1C8F9E)',
   },
   {
+    n: '02',
     title: 'Certified manufacturing',
-    description: 'Made in certified pharmaceutical facilities under strict purity and potency checks.',
+    text: 'Made in certified pharmaceutical facilities.',
+    icon: 'building',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E3EEFC)',
+    glow: 'rgba(140,190,255,0.5)',
+    iconBg: 'linear-gradient(135deg, #1C8F9E, #4F8ED8)',
   },
   {
+    n: '03',
     title: 'Natural, bioavailable actives',
-    description: 'Herbal extracts and nutrient forms your body can actually absorb and use.',
+    text: '100% natural ingredients in a softgel.',
+    icon: 'leaf',
+    bg: 'linear-gradient(150deg, #FFFFFF, #FBF1DA)',
+    glow: 'rgba(240,216,148,0.6)',
+    iconBg: 'linear-gradient(135deg, #C9A44C, #B97A14)',
   },
   {
-    title: 'Order in a chat',
-    description: 'No accounts, no carts. Pick a quantity and confirm with a real person on WhatsApp.',
+    n: '04',
+    title: 'A real person to talk to',
+    text: 'You order in a WhatsApp chat with our team.',
+    icon: 'chat',
+    bg: 'linear-gradient(150deg, #FFFFFF, #E2F5EB)',
+    glow: 'rgba(110,214,170,0.5)',
+    iconBg: 'linear-gradient(135deg, #10825F, #3FBF8E)',
   },
 ] as const
 
-export const howItWorks = [
-  {
-    title: 'Pick a product',
-    description: 'Browse the range and open the product you want to know more about.',
-  },
-  {
-    title: 'Choose your quantity',
-    description: 'Select how many strips you need. The total updates as you go.',
-  },
-  {
-    title: 'Confirm on WhatsApp',
-    description: 'Your order opens prefilled in WhatsApp. Our team confirms delivery and payment there.',
-  },
+export const orderSteps = [
+  { title: 'Pick your pack', text: `${starter.days} days or ${fullBox.days} days.` },
+  { title: 'Tap Order on WhatsApp', text: 'Your order is typed in for you. Just send it.' },
+  { title: 'Confirm in the chat', text: 'We confirm delivery and payment with you. Nothing is charged on this site.' },
 ] as const
+
+export const reels = [1, 2, 3, 4].map((n) => ({
+  id: `reel-${n}`,
+  src: `/media/videos/reel-${n}.mp4`,
+  poster: `/media/videos/reel-${n}-poster.webp`,
+  title: `Multashva video ${n}`,
+}))
 
 export const homeFaqs = [
   {
-    question: 'How do I order from Vanpure Pharma?',
+    question: 'How do I order?',
+    answer: `Open ${featuredProduct.shortName}, pick ${starter.strips} or ${fullBox.strips} strips and tap Order on WhatsApp. Your order is typed into the chat for you.`,
+  },
+  { question: 'Do I need an account?', answer: 'No. There is no sign-up or login. You only need WhatsApp.' },
+  {
+    question: 'How do delivery and payment work?',
     answer:
-      'Open a product, choose how many strips you want and tap "Order on WhatsApp". It opens a WhatsApp chat with us with your order already written out. Our team confirms availability, delivery, and payment right there in the chat. Nothing is charged on this website.',
+      'Our team confirms availability, delivery and payment with you in the WhatsApp chat. Nothing is charged on this site.',
   },
   {
-    question: 'Do I need an account?',
-    answer: 'No. Ordering happens over WhatsApp, so there is nothing to sign up for and no password to remember.',
-  },
-  {
-    question: 'How are delivery and payment handled?',
-    answer:
-      'Once your order arrives in our WhatsApp chat, our team confirms availability, shares delivery details for your location and agrees payment with you directly.',
-  },
-  {
-    question: 'Which products are available right now?',
-    answer: `${featuredProduct.name} is our first product, launching ${site.launchDateDisplay} at a special release price. More formulas are in development; follow @${site.instagram.handle} to hear about them first.`,
+    question: 'What can I buy right now?',
+    answer: `${featuredProduct.name}, in a ${starter.days}-day pack (${starter.strips} strips) or a ${fullBox.days}-day pack (${fullBox.strips} strips, one full box).`,
   },
 ]
+
+export const founderQuote = {
+  name: 'Vansh Choudhary',
+  role: 'Founder & Owner',
+  quote: 'Our core commitment is to design science-backed health solutions that keep you vibrant, energised and healthy every day.',
+  avatar: '/media/founder/vansh-choudhary-avatar.webp',
+}
+
+export const launchedLabel = `Just launched: ${featuredProduct.shortName}`
+
+export const askUrlText = `Hi ${site.name.split(' ')[0]}, I have a question about ${featuredProduct.shortName}.`

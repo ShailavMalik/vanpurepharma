@@ -1,24 +1,30 @@
-export type PillarIcon = 'shield' | 'zap' | 'brain' | 'sparkles' | 'leaf' | 'heart'
-
-export interface Pillar {
-  icon: PillarIcon
-  title: string
-  description: string
+export interface Pack {
+  strips: number
+  days: number
+  price: number
+  mrp: number
+  fullBox?: boolean
 }
 
 export interface Ingredient {
   name: string
-  strength: string
+  dose: string
   /** Percentage of recommended daily allowance, when printed on pack. */
   rda?: number
-  benefit: string
+  pillar: string
 }
 
 export interface IngredientGroup {
   id: string
-  label: string
-  shortLabel: string
+  title: string
+  short: string
   items: Ingredient[]
+}
+
+export interface Pillar {
+  name: string
+  source: string
+  gradient: string
 }
 
 export interface FaqItem {
@@ -26,266 +32,183 @@ export interface FaqItem {
   answer: string
 }
 
-export interface ProductImage {
+export interface GalleryImage {
   src: string
   srcSet: string
   width: number
   height: number
   alt: string
+  /** Transparent cut-outs sit on the stage gradient; photos fill the frame. */
+  fit: 'contain' | 'cover'
 }
 
 export interface Product {
   slug: string
   name: string
+  shortName: string
   category: string
   subtitle: string
-  shortDescription: string
   description: string
-  badges: string[]
-  highlights: string[]
-  trust: string[]
-  softgelsPerBox: number
+  packs: Pack[]
   softgelsPerStrip: number
-  stripsPerBox: number
+  softgelsPerBox: number
   softgelsPerDay: number
-  price: { currency: 'INR'; mrpPerStrip: number; perStrip: number }
-  order: { minStrips: number; maxStrips: number; presets: number[] }
-  media: {
-    image: ProductImage
-    /** Small variant for cards, thumbnails and the buy box. */
-    thumb: string
-    video?: { src: string; poster: string; width: number; height: number }
-  }
-  stats: { value: number; label: string }[]
+  highlights: { label: string; value: string }[]
+  trust: { label: string; icon: 'leaf' | 'building' | 'shield' }[]
+  gallery: GalleryImage[]
+  video: { src: string; poster: string; width: number; height: number; seconds: number }
+  stats: { value: string; label: string }[]
   pillars: Pillar[]
   ingredientGroups: IngredientGroup[]
-  dosageSteps: { title: string; description: string }[]
-  usageNotes: string[]
-  qualityPoints: { title: string; description: string }[]
+  aboutPoints: { title: string; text: string }[]
+  details: { label: string; value: string }[]
+  dosageNote: string
   faqs: FaqItem[]
 }
 
 const multashva: Product = {
   slug: 'vanpure-multashva',
   name: 'Vanpure Multashva',
+  shortName: 'Multashva',
   category: 'Premium Nutraceutical',
   subtitle: 'Complete Vitality & Wellness Formula',
-  shortDescription:
-    'Daily softgel with Ashwagandha, Ginseng, Biotin, Vitamin D3 and 15 active nutrients for immunity, energy, focus and calm.',
   description:
-    'Scientifically formulated premium softgel capsules combining herbal adaptogens, vital vitamins, minerals, and amino acids to power your daily stamina, immune health, and active lifestyle.',
-  badges: ['Launch offer', 'New'],
-  highlights: ['Ashwagandha 100 mg', 'Vitamin D3 · 100% RDA', 'Biotin for hair, skin & nails'],
-  trust: ['100% natural ingredients', 'Certified pharma facilities', '100 softgels per box'],
-  softgelsPerBox: 100,
+    'Premium softgels combining herbal adaptogens, vital vitamins, minerals and amino acids to power daily stamina, immune health and an active lifestyle.',
+  packs: [
+    { strips: 6, days: 30, price: 600, mrp: 720 },
+    { strips: 10, days: 50, price: 999, mrp: 1200, fullBox: true },
+  ],
   softgelsPerStrip: 10,
-  stripsPerBox: 10,
+  softgelsPerBox: 100,
   softgelsPerDay: 2,
-  price: { currency: 'INR', mrpPerStrip: 120, perStrip: 75 },
-  order: { minStrips: 1, maxStrips: 20, presets: [1, 3, 5, 10] },
-  media: {
-    image: {
-      src: '/media/product/multashva-box-1600.webp',
-      srcSet:
-        '/media/product/multashva-box-400.webp 400w, /media/product/multashva-box-800.webp 800w, /media/product/multashva-box-1600.webp 1600w',
+  highlights: [
+    { label: 'Ashwagandha', value: '100 mg' },
+    { label: 'Vitamin D3', value: '100% RDA' },
+    { label: 'Biotin', value: 'hair, skin, nails' },
+  ],
+  trust: [
+    { label: '100% natural ingredients', icon: 'leaf' },
+    { label: 'Certified pharma facilities', icon: 'building' },
+    { label: 'Purity & potency checked', icon: 'shield' },
+  ],
+  gallery: [
+    {
+      src: '/media/product/pack-shot-1600.webp',
+      srcSet: '/media/product/pack-shot-400.webp 400w, /media/product/pack-shot-800.webp 800w, /media/product/pack-shot-1600.webp 1600w',
       width: 1600,
-      height: 1050,
+      height: 1051,
       alt: 'Vanpure Multashva box: 100 softgel capsules, complete vitality and wellness formula',
+      fit: 'contain',
     },
-    thumb: '/media/product/multashva-box-400.webp',
-    video: {
-      src: '/media/product/product.mp4',
-      poster: '/media/product/product-poster.webp',
-      width: 848,
-      height: 478,
+    {
+      src: '/media/product/pack-trio-1600.webp',
+      srcSet: '/media/product/pack-trio-800.webp 800w, /media/product/pack-trio-1600.webp 1600w',
+      width: 1600,
+      height: 483,
+      alt: 'Three sides of the Vanpure Multashva box showing supplement facts and instructions',
+      fit: 'contain',
     },
+    {
+      src: '/media/product/lifestyle-1200.webp',
+      srcSet: '/media/product/lifestyle-600.webp 600w, /media/product/lifestyle-1200.webp 1200w',
+      width: 1200,
+      height: 692,
+      alt: 'Vanpure Multashva box, a 10-softgel strip and a single golden softgel on a marble table',
+      fit: 'cover',
+    },
+  ],
+  video: {
+    src: '/media/product/product.mp4',
+    poster: '/media/product/product-poster.webp',
+    width: 848,
+    height: 478,
+    seconds: 10,
   },
   stats: [
-    { value: 15, label: 'active ingredients' },
-    { value: 6, label: 'pillars of wellness' },
-    { value: 100, label: 'softgels per box' },
-    { value: 2, label: 'softgels a day' },
+    { value: '15', label: 'actives' },
+    { value: '6', label: 'pillars' },
+    { value: '2', label: 'a day' },
+    { value: '100', label: 'per box' },
   ],
   pillars: [
-    {
-      icon: 'shield',
-      title: 'Immunity Support',
-      description:
-        'Vitamin C, Vitamin D3, and Folic Acid work together to strengthen immune defence and guard against environmental pathogens.',
-    },
-    {
-      icon: 'zap',
-      title: 'Energy Booster',
-      description:
-        'Ginseng Extract and B-Complex vitamins enhance cellular ATP energy output, easing physical tiredness and endurance loss.',
-    },
-    {
-      icon: 'brain',
-      title: 'Brain & Cognitive',
-      description:
-        'Choline and L-Tyrosine support neurotransmitter synthesis, sharpening mental clarity, focus, and memory recall.',
-    },
-    {
-      icon: 'sparkles',
-      title: 'Skin, Hair & Nails',
-      description:
-        'High-potency Biotin with Vitamin A and Nicotinamide nourishes hair roots, promotes radiant skin, and repairs brittle nails.',
-    },
-    {
-      icon: 'leaf',
-      title: 'Stress Management',
-      description:
-        'Pure Ashwagandha (100 mg) helps lower cortisol, promoting emotional stability, calm focus, and stress adaptation.',
-    },
-    {
-      icon: 'heart',
-      title: 'Overall Vitality',
-      description:
-        'Taurine and essential amino acids (L-Leucine) accelerate muscle recovery, support metabolic rate, and improve heart function.',
-    },
+    { name: 'Immunity', source: 'C · D3 · Folic Acid', gradient: 'linear-gradient(135deg, #CFF3E2, #10825F)' },
+    { name: 'Energy', source: 'Ginseng · B-complex', gradient: 'linear-gradient(135deg, #FFE3A6, #D99A2B)' },
+    { name: 'Brain & focus', source: 'Choline · L-Tyrosine', gradient: 'linear-gradient(135deg, #D6EAFF, #4F8ED8)' },
+    { name: 'Skin, hair & nails', source: 'Biotin · A · B3', gradient: 'linear-gradient(135deg, #FFD6E4, #D9688F)' },
+    { name: 'Stress', source: 'Ashwagandha 100 mg', gradient: 'linear-gradient(135deg, #E2DCFF, #6F5BD6)' },
+    { name: 'Vitality', source: 'Taurine · L-Leucine', gradient: 'linear-gradient(135deg, #CDEFF2, #1C8F9E)' },
   ],
   ingredientGroups: [
     {
       id: 'herbal',
-      label: 'Herbal Adaptogens',
-      shortLabel: 'Herbal',
+      title: 'Herbal adaptogens',
+      short: 'herbal',
       items: [
-        {
-          name: 'Ashwagandha',
-          strength: '100 mg',
-          benefit: 'Reduces stress and cortisol, restores vitality, boosts physical endurance and mental vigour.',
-        },
-        {
-          name: 'Ginseng Extract',
-          strength: '42.5 mg',
-          benefit: 'Enhances energy levels, combats chronic fatigue, and improves blood circulation and stamina.',
-        },
+        { name: 'Ashwagandha', dose: '100 mg', pillar: 'Stress management' },
+        { name: 'Ginseng Extract', dose: '42.5 mg', pillar: 'Energy' },
       ],
     },
     {
       id: 'vitamins',
-      label: 'Vitamins & Minerals',
-      shortLabel: 'Vitamins',
+      title: 'Vitamins & minerals',
+      short: 'vitamins & minerals',
       items: [
-        {
-          name: 'Biotin (Vitamin B7)',
-          strength: '30 mcg',
-          rda: 75,
-          benefit: 'Stimulates keratin synthesis for healthy hair growth, glowing skin, and strong nails.',
-        },
-        {
-          name: 'Vitamin D3 (Cholecalciferol)',
-          strength: '600 IU',
-          rda: 100,
-          benefit: 'Facilitates calcium absorption, maintains bone density, and reinforces immune defence.',
-        },
-        {
-          name: 'Vitamin C (Ascorbic Acid)',
-          strength: '40 mg',
-          rda: 50,
-          benefit: 'Provides powerful antioxidant protection, boosts immunity, and aids tissue repair.',
-        },
-        {
-          name: 'Nicotinamide (Vitamin B3)',
-          strength: '18 mg',
-          rda: 100,
-          benefit: 'Supports cellular energy conversion, maintains a healthy skin barrier, and lowers fatigue.',
-        },
-        {
-          name: 'Pyridoxine HCl (Vitamin B6)',
-          strength: '1.2 mg',
-          rda: 63,
-          benefit: 'Essential for neurotransmitter production, nervous system health, and protein metabolism.',
-        },
-        {
-          name: 'Folic Acid (Vitamin B9)',
-          strength: '176.4 mcg',
-          rda: 100,
-          benefit: 'Promotes red blood cell formation, supports cellular regeneration, and reduces exhaustion.',
-        },
-        {
-          name: 'Cyanocobalamin (Vitamin B12)',
-          strength: '1 mcg',
-          rda: 45,
-          benefit: 'Crucial for nerve health, DNA synthesis, and preventing deficiency-related fatigue.',
-        },
-        {
-          name: 'Vitamin A (Retinyl Palmitate)',
-          strength: '0.5 mg',
-          rda: 50,
-          benefit: 'Supports clear vision, mucosal immunity, and cellular growth.',
-        },
-        {
-          name: 'Calcium Pantothenate',
-          strength: '0.4 mg',
-          rda: 8,
-          benefit: 'Aids hormone synthesis and the conversion of fatty acids into usable cellular energy.',
-        },
+        { name: 'Vitamin D3', dose: '600 IU', rda: 100, pillar: 'Immunity' },
+        { name: 'Folic Acid', dose: '176.4 mcg', rda: 100, pillar: 'Immunity' },
+        { name: 'Nicotinamide', dose: '18 mg', rda: 100, pillar: 'Skin, hair & nails' },
+        { name: 'Biotin', dose: '30 mcg', rda: 75, pillar: 'Skin, hair & nails' },
+        { name: 'Vitamin B6', dose: '1.2 mg', rda: 63, pillar: 'Energy' },
+        { name: 'Vitamin C', dose: '40 mg', rda: 50, pillar: 'Immunity' },
+        { name: 'Vitamin A', dose: '0.5 mg', rda: 50, pillar: 'Skin, hair & nails' },
+        { name: 'Vitamin B12', dose: '1 mcg', rda: 45, pillar: 'Energy' },
+        { name: 'Calcium Pantothenate', dose: '0.4 mg', rda: 8, pillar: 'Energy' },
       ],
     },
     {
       id: 'amino',
-      label: 'Amino Acids & Brain Boosters',
-      shortLabel: 'Amino acids',
+      title: 'Amino acids',
+      short: 'amino acids',
       items: [
-        {
-          name: 'Choline',
-          strength: '10 mg',
-          benefit: 'Supports cognitive performance, brain cell structure, and healthy lipid metabolism.',
-        },
-        {
-          name: 'L-Tyrosine',
-          strength: '10 mg',
-          benefit: 'Supports neurotransmitter production for focus and mental performance under pressure.',
-        },
-        {
-          name: 'Taurine',
-          strength: '10 mg',
-          benefit: 'Enhances muscle stamina, cardiovascular efficiency, and metabolic endurance.',
-        },
-        {
-          name: 'L-Leucine',
-          strength: '10 mg',
-          benefit: 'Protects muscle tissue, improves mental resilience during stress, and supports alertness.',
-        },
+        { name: 'Choline', dose: '10 mg', pillar: 'Brain & cognitive' },
+        { name: 'L-Tyrosine', dose: '10 mg', pillar: 'Brain & cognitive' },
+        { name: 'Taurine', dose: '10 mg', pillar: 'Overall vitality' },
+        { name: 'L-Leucine', dose: '10 mg', pillar: 'Overall vitality' },
       ],
     },
   ],
-  dosageSteps: [
-    { title: 'Take 2 softgels', description: 'One daily serving is two softgel capsules.' },
-    { title: 'After a meal', description: 'Swallow with a glass of water after eating.' },
-    { title: 'Every day', description: 'Consistency is what builds lasting vitality.' },
+  aboutPoints: [
+    { title: '15 active ingredients', text: 'in each softgel: herbal adaptogens, vitamins, minerals and amino acids.' },
+    { title: 'Stress management', text: 'with Ashwagandha 100 mg.' },
+    { title: 'Immunity support', text: 'with Vitamin C, Vitamin D3 (100% RDA) and Folic Acid.' },
+    { title: 'Energy', text: 'from Ginseng extract and B-complex vitamins.' },
+    { title: 'Skin, hair and nails', text: 'with Biotin, Vitamin A and Nicotinamide.' },
+    { title: 'Brain and focus', text: 'with Choline and L-Tyrosine; vitality with Taurine and L-Leucine.' },
   ],
-  usageNotes: [
-    'Or as directed by a health professional.',
-    'Store in a cool, dry place below 25°C, protected from light and moisture.',
-    'Formulated for adult dietary supplementation.',
+  details: [
+    { label: 'Category', value: 'Premium Nutraceutical' },
+    { label: 'Form', value: 'Softgel capsule' },
+    { label: 'Pack', value: '10 softgels per strip · 100 per box' },
+    { label: 'Dose', value: '2 softgels a day, after a meal, with water' },
+    { label: 'Storage', value: 'Below 25 °C, away from light and moisture' },
+    { label: 'Suitable for', value: 'Adults' },
   ],
-  qualityPoints: [
-    { title: 'Premium natural ingredients', description: 'Bioavailable nutrients your body can actually use.' },
-    { title: 'Certified pharmaceutical facilities', description: 'Manufactured in state-of-the-art certified plants.' },
-    { title: 'Strict quality standards', description: 'Every batch checked for purity and optimal potency.' },
-  ],
+  dosageNote:
+    'For adults. Take 2 softgels a day after a meal, with water. Consult a health professional before use if pregnant, nursing, or on medication.',
   faqs: [
+    { question: 'How do I take it?', answer: '2 softgels daily after a meal, with water.' },
     {
-      question: 'How many softgels are in a strip?',
-      answer:
-        'Each strip has 10 softgel capsules. A full box contains 10 strips, which is 100 softgels. At two softgels a day, one strip lasts five days and a box lasts fifty.',
+      question: 'How long does a pack last?',
+      answer: '6 strips (60 softgels) last 30 days. 10 strips (100 softgels, one full box) last 50 days.',
     },
     {
-      question: 'How should I take Vanpure Multashva?',
+      question: 'How do I pay and get it delivered?',
       answer:
-        'Take two softgel capsules daily after a meal with a glass of water, or as directed by a health professional. Store the pack in a cool, dry place below 25°C, away from light and moisture.',
+        'Tap Order on WhatsApp. Our team confirms availability, delivery and payment with you in the chat. Nothing is charged on this site.',
     },
+    { question: 'Do I need an account?', answer: 'No. You only need WhatsApp.' },
     {
       question: 'Who is it for?',
-      answer:
-        'It is a nutraceutical formulated for adult dietary supplementation. If you are pregnant, nursing, on medication, or managing a medical condition, please consult a health professional before use.',
-    },
-    {
-      question: 'What is the launch price?',
-      answer:
-        'The special release price is ₹75 per strip against an MRP of ₹120 per strip. The launch offer applies to orders placed through WhatsApp.',
+      answer: 'Adults. Consult a health professional before use if you are pregnant, nursing, or on medication.',
     },
   ],
 }
@@ -302,6 +225,18 @@ export function productPath(product: Product): string {
   return `/products/${product.slug}`
 }
 
+export function ingredientsPath(product: Product): string {
+  return `${productPath(product)}/ingredients`
+}
+
 export function orderPath(product: Product): string {
   return `${productPath(product)}#order`
+}
+
+export function lowestPrice(product: Product): number {
+  return Math.min(...product.packs.map((pack) => pack.price))
+}
+
+export function activeCount(product: Product): number {
+  return product.ingredientGroups.reduce((sum, group) => sum + group.items.length, 0)
 }

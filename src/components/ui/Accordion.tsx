@@ -1,56 +1,54 @@
-import { ChevronDown } from 'lucide-react'
-import { AnimatePresence, motion } from 'motion/react'
 import { useId, useState } from 'react'
+import type { FaqItem } from '../../data/products'
 import { cn } from '../../lib/cn'
-import { easeOutExpo } from '../../lib/motion'
-import { GlassCard } from './GlassCard'
 
-interface AccordionItemProps {
-  question: string
-  answer: string
-  defaultOpen?: boolean
+interface FaqListProps {
+  items: FaqItem[]
+  className?: string
+  /** Index of the item open on load; -1 opens none. */
+  defaultOpen?: number
 }
 
-export function AccordionItem({ question, answer, defaultOpen = false }: AccordionItemProps) {
+/** White card of expandable questions; one open at a time, like the design. */
+export function FaqList({ items, className, defaultOpen = 0 }: FaqListProps) {
   const [open, setOpen] = useState(defaultOpen)
-  const panelId = useId()
+  const baseId = useId()
 
   return (
-    <GlassCard tier={1} className={cn('overflow-hidden transition-colors duration-300', open && 'bg-white/[0.06]')}>
-      <h3>
-        <button
-          type="button"
-          aria-expanded={open}
-          aria-controls={panelId}
-          onClick={() => setOpen((v) => !v)}
-          className="flex w-full items-center justify-between gap-4 px-5 py-5 text-left font-display text-base font-semibold sm:px-6 md:text-lg"
-        >
-          <span>{question}</span>
-          <span
-            className={cn(
-              'flex size-8 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/5 transition-transform duration-300',
-              open && 'rotate-180 bg-gradient-brand text-white',
-            )}
-          >
-            <ChevronDown className="size-4" />
-          </span>
-        </button>
-      </h3>
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            id={panelId}
-            key="panel"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.35, ease: easeOutExpo }}
-            className="overflow-hidden"
-          >
-            <p className="px-5 pb-6 text-[15px] leading-relaxed text-muted sm:px-6 md:text-base">{answer}</p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </GlassCard>
+    <div className={cn('card px-4 lg:px-6', className)}>
+      {items.map((item, index) => {
+        const isOpen = open === index
+        const panelId = `${baseId}-${index}`
+        return (
+          <div key={item.question} className="border-b border-line last:border-b-0">
+            <h3 className="m-0">
+              <button
+                type="button"
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                onClick={() => setOpen(isOpen ? -1 : index)}
+                className="flex min-h-14 w-full cursor-pointer items-center justify-between gap-3 py-3.5 text-left font-sans text-[15px] font-bold text-ink lg:min-h-16 lg:py-4 lg:text-[17px]"
+              >
+                <span>{item.question}</span>
+                <span
+                  aria-hidden
+                  className={cn(
+                    'flex size-7 shrink-0 items-center justify-center rounded-full text-lg transition-colors duration-200 lg:size-8 lg:text-xl',
+                    isOpen ? 'bg-green text-white' : 'bg-mint text-green',
+                  )}
+                >
+                  {isOpen ? '−' : '+'}
+                </span>
+              </button>
+            </h3>
+            <div id={panelId} className={cn('collapse-grid', isOpen && 'collapse-open')}>
+              <div>
+                <p className="m-0 pb-4 pr-10 text-sm leading-relaxed text-muted lg:pb-[18px] lg:pr-12 lg:text-[15px]">{item.answer}</p>
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
   )
 }

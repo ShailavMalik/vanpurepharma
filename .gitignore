@@ -31,3 +31,6 @@ _local/
 
 # Playwright MCP output
 .playwright-mcp/
+
+# Python
+__pycache__/

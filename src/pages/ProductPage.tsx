@@ -1,14 +1,13 @@
+import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Faq } from '../components/product/Faq'
-import { FounderBand } from '../components/product/FounderBand'
-import { HowToTake } from '../components/product/HowToTake'
-import { IngredientsPanel } from '../components/product/IngredientsPanel'
-import { MoreProducts } from '../components/product/MoreProducts'
-import { PillarsGrid } from '../components/product/PillarsGrid'
-import { ProductHero } from '../components/product/ProductHero'
-import { StatsStrip } from '../components/product/StatsStrip'
+import { Gallery } from '../components/product/Gallery'
+import { PackChooser } from '../components/product/PackChooser'
+import { AboutItem, ProductDetails, TrustTrio } from '../components/product/ProductInfo'
+import { ProductStickyBar } from '../components/product/ProductStickyBar'
 import { Seo } from '../components/seo/Seo'
-import { getProduct, productPath } from '../data/products'
+import { FaqList } from '../components/ui/Accordion'
+import { Breadcrumb } from '../components/ui/Breadcrumb'
+import { getProduct, lowestPrice, productPath } from '../data/products'
 import { site } from '../data/site'
 import { breadcrumbJsonLd, faqJsonLd, productJsonLd } from '../lib/jsonLd'
 import { NotFoundPage } from './NotFoundPage'
@@ -16,13 +15,14 @@ import { NotFoundPage } from './NotFoundPage'
 export function ProductPage() {
   const { slug } = useParams()
   const product = getProduct(slug)
-  if (!product) return <NotFoundPage />
+  const [pack, setPack] = useState(() => product?.packs.find((p) => p.fullBox) ?? product?.packs[0])
+  if (!product || !pack) return <NotFoundPage />
 
   return (
     <>
       <Seo
         title={`${product.name} | ${product.subtitle} | ${site.name}`}
-        description={`${product.shortDescription} Launch price ₹${product.price.perStrip}/strip (MRP ₹${product.price.mrpPerStrip}). Order on WhatsApp.`}
+        description={`${product.description} From ₹${lowestPrice(product)} at launch. Pick a pack and order on WhatsApp.`}
         path={productPath(product)}
         type="product"
         jsonLd={[
@@ -30,21 +30,49 @@ export function ProductPage() {
           faqJsonLd(product.faqs),
           breadcrumbJsonLd([
             { name: 'Home', path: '/' },
-            { name: 'Products', path: '/products' },
-            { name: product.name, path: productPath(product) },
+            { name: product.shortName, path: productPath(product) },
           ]),
         ]}
       />
-      <ProductHero product={product} />
-      <div className="mt-16 md:mt-24">
-        <StatsStrip product={product} />
+
+      <div className="container-site pb-2.5 lg:pt-5">
+        <Breadcrumb items={[{ label: 'Home', to: '/' }, { label: product.shortName }]} />
       </div>
-      <PillarsGrid product={product} />
-      <IngredientsPanel product={product} />
-      <HowToTake product={product} />
-      <FounderBand />
-      <Faq items={product.faqs} title={`Questions about ${product.name}.`} />
-      <MoreProducts />
+
+      <div className="container-site lg:mt-5 lg:flex lg:flex-wrap lg:items-start lg:gap-12">
+        <div className="-mx-1 lg:mx-0 lg:sticky lg:top-[90px] lg:min-w-0 lg:flex-[1_1_460px]">
+          <Gallery product={product} />
+        </div>
+
+        <div className="lg:min-w-0 lg:flex-[1_1_460px]">
+          <div className="mt-3 lg:mt-0">
+            <div className="eyebrow">{product.category}</div>
+            <h1 className="m-0 mt-1.5 font-display text-4xl leading-none font-bold tracking-[-1px] lg:mt-2 lg:text-[52px] lg:leading-[0.98] lg:font-extrabold lg:tracking-[-1.6px]">{product.name}</h1>
+            <div className="mt-2 text-[15px] font-semibold text-deep lg:mt-2.5 lg:text-lg">{product.subtitle}</div>
+          </div>
+
+          <div className="mt-[18px] lg:mt-6">
+            <PackChooser product={product} selected={pack} onSelect={setPack} />
+          </div>
+          <div className="mt-3.5">
+            <TrustTrio product={product} />
+          </div>
+          <div className="mt-10">
+            <AboutItem product={product} />
+          </div>
+          <div className="mt-8 lg:mt-9">
+            <ProductDetails product={product} />
+          </div>
+        </div>
+      </div>
+
+      <section className="container-site mt-10 lg:mt-24">
+        <h2 className="m-0 font-display text-[26px] font-bold tracking-[-0.5px] lg:text-4xl lg:font-extrabold lg:tracking-[-0.8px]">Questions</h2>
+        <FaqList items={product.faqs} className="mt-3 lg:mt-4 lg:px-7" />
+      </section>
+
+      <div className="h-5 lg:hidden" />
+      <ProductStickyBar product={product} pack={pack} />
     </>
   )
 }

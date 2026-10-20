@@ -8,14 +8,9 @@
     "build": "tsc -b && vite build && vite build --ssr src/entry-server.tsx --outDir dist/server && tsx scripts/prerender.ts",
     "preview": "serve dist -l 4173",
     "lint": "oxlint",
-    "typecheck": "tsc -b",
-    "assets": "python scripts/prepare-assets.py"
+    "typecheck": "tsc -b"
   },
   "dependencies": {
-    "embla-carousel-autoplay": "^8.6.0",
-    "embla-carousel-react": "^8.6.0",
-    "lucide-react": "^1.47.0",
-    "motion": "^13.4.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-router-dom": "^7.18.4",
